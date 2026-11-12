@@ -1,0 +1,20 @@
+{
+  "bot-account": {
+    "username": "AFK",
+    "type": "offline"
+  },
+  "server": {
+    "ip": "epic.servmine.top",
+    "port": 25141,
+    "version": "1.20.4"
+  },
+  "utils": {
+    "auto-auth": {
+      "enabled": true,
+      "password": "228288228"
+    },
+    "auto-reconnect": true,
+    "auto-reconnect-delay": 2000,
+    "max-reconnect-delay": 120000
+  }
+}
