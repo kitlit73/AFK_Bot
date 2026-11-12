@@ -52,37 +52,22 @@ function createBot() {
       isReconnecting = false;
 
       if (config.utils['auto-auth']?.enabled && authPassword) {
-        let authHandled = false;
-
-        const tryAuth = (type) => {
-          if (authHandled || !bot) return;
-          authHandled = true;
-          if (type === 'register') {
-            bot.chat(`/register ${authPassword} ${authPassword}`);
-            console.log('[Auth] Sent /register');
-          } else {
+        setTimeout(() => {
+          if (bot) {
             bot.chat(`/login ${authPassword}`);
-            console.log('[Auth] Sent /login');
+            console.log(`[Auth] Sent /login ${authPassword}`);
           }
-        };
+        }, 2000);
 
         bot.on('messagestr', (message) => {
-          if (authHandled) return;
           const msg = message.toLowerCase();
-          if (msg.includes('/register') || msg.includes('register ') || msg.includes('지정된 비밀번호')) {
-            tryAuth('register');
-          } else if (msg.includes('/login') || msg.includes('login ') || msg.includes('로그인')) {
-            tryAuth('login');
+          if (msg.includes('register') || msg.includes('/register') || msg.includes('지정된 비밀번호')) {
+            if (bot) {
+              bot.chat(`/register ${authPassword} ${authPassword}`);
+              console.log(`[Auth] Sent /register ${authPassword}`);
+            }
           }
         });
-
-        setTimeout(() => {
-          if (!authHandled && bot) {
-            console.log('[Auth] Sending /login as failsafe');
-            bot.chat(`/login ${authPassword}`);
-            authHandled = true;
-          }
-        }, 10000);
       }
     });
 
